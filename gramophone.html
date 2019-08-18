@@ -266,18 +266,18 @@
             <!--切換-->
             <div id="btn-next-pre-area">
                 <button id="btnNextSong" @click="nextSong">
-                    <img src="img/Player/next.svg"/>
+                    <img src="./img/Player/next.svg"/>
                 </button>
                 <button @click="preSong">
-                    <img src="img/Player/next.svg"/>
+                    <img src="./img/Player/next.svg"/>
                 </button>
                 <button @click="randomSong">
-                    <img src="img/Player/random.svg"/>
+                    <img src="./img/Player/random.svg"/>
                 </button>
             </div>
             <!--操作桿-->
             <div id="playerPole" class="pauseMusic" v-bind:class="{'playingMusic':playingMusic}" >
-                <img id="playerPolePic" src="img/Player/player.png">
+                <img id="playerPolePic" src="./img/Player/player.png">
             </div> 
             <!--歌資訊-->
             <div id="divSongInfo">
@@ -286,15 +286,15 @@
             </div>
             <!--播放-->
             <button class="btnPlay" v-if="!playingMusic" @click.prevent="swithchPlayingMusic">
-                <img src="img/Player/play2.svg">
+                <img src="./img/Player/play2.svg">
             </button>
             <button class="btnPlay" v-else @click.prevent="swithchPlayingMusic">
-                    <img src="img/Player/stop2.svg">
+                    <img src="./img/Player/stop2.svg">
             </button>
             <!--音量-->
             <div id="divVoiceBar">
                 <input v-model="nowVolume" type="range" min="0" max="1" step="0.01" style="width:75%">
-                <img class="sound" src="img/Player/sound.svg" alt="">
+                <img class="sound" src="./img/Player/sound.svg" alt="">
             </div>
             <!--音樂時間條-->
             <div id="divTimeLine">
