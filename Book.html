@@ -178,31 +178,20 @@
             <div class="letterBackground" hidden :class="{'flipToNextPage':flipToNextPage,'flipToPrePage':flipToPrePage}">
             </div>
         </div>
-        <!--換頁按鈕-->
-        <div id="divChangeButton">
-            {{nowPage}}
-            <div @click="flipPage('pre')">
-                < 
-            </div>
-            <div @click="flipPage('next')">
-                >
-            </div>
-        </div>
-
 
         <!--清單-->
         <div id="playList">
             <div id="playList_leftSide">
                 <div class="playList_MainList">
-                    功能清單
+                    功能列表
                 </div>
                 <div class="playList_SubList">
-                    <div>
-                        自製卡片
-                    </div>
-                    <div>
-                        <a href="">音樂撥放器</a>
-                    </div>
+                    <a href="./Book.html">
+                        <div>電子卡片</div>
+                    </a>
+                    <a href="./gramophone.html">
+                        <div>音樂撥放器</div>
+                    </a>
                 </div>
             </div>
         </div>
