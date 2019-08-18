@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./Jquery/jquery-3.4.1.js"></script>
+    <script src="./Vue/vue.js"></script>
+    <link rel=stylesheet type="text/css" href="Book.css">
+
+    <script>
+        $(document).ready(function(){
+            var app = new Vue({
+                
+                el:"#divContent",
+                data:{
+                    isOpen:false,
+                    nowPage: 0,
+                    flipToPrePage:false,
+                    flipToNextPage:false,
+                    flipAnimationType:"",
+                    timer:0,
+                    pages:[
+                    {
+                        id:1,
+                        title:"2019.8.25",
+                        contentText:"我知道很不像書，抱歉我盡力了。<br/>筱婕祝妳生日快樂" 
+                                    + "<br/>妳曾經說過說過工作後希望每年都能出國一次，不知道實現了沒有。"
+                                    + "",
+                        pageZIndex:-1,
+                        show:false,
+                        worldMapShow:true,
+                    },
+                    {
+                        id:2,
+                        title:"2020.8.25",
+                        contentText:"好久不見，祝妳生日快樂，這是2020份的祝福，請在2020年再看謝謝。",
+                        pageZIndex:-2,
+                        show:false,
+                        worldMapShow:false,
+                    },
+                    {
+                        id:3,
+                        title:"2021.8.25",
+                        contentText:"想不出來還能寫甚麼了，",
+                        pageZIndex:-3,
+                        show:false,
+                        worldMapShow:false,
+                    },
+                    {
+                        id:4,
+                        title:"2022.8.25",
+                        contentText:"妳最近好嗎？<br/>",
+                        pageZIndex:-3,
+                        show:false,
+                        worldMapShow:false,
+                    }
+                    ],
+                },
+                methods:{
+                    //封面開關狀態
+                    openBook:function(){
+                        if(this.isOpen){
+                            this.flipPage("pre");
+                        }
+                        else{
+                            this.isOpen = true;
+                            //把開啟後把內容清空，不清空會看到反過來的字
+                            $("#divFrontCover").html("");
+                        }                        
+                    },
+                    //翻頁
+                    flipPage:function(flipAnimation_Type){
+                        this.flipAnimationType = flipAnimation_Type;
+                        //檢查能不能翻頁
+                        if(this.checkIsFlip()){                            
+                            //翻頁動畫
+                            this.flipAnimation(this.flipAnimationType);
+                        };
+                    },
+                    //檢查能不能翻頁
+                    checkIsFlip:function(){
+                        if(this.flipAnimationType=="pre"){
+                            if(this.nowPage-1 == -1){
+                                alert("已經是第一頁了"); 
+                                return false;                           
+                            }
+                        }
+                        else{
+                            if(this.nowPage+1 == this.pages.length){
+                                alert("已經是最後一頁了");
+                                return false;
+                            }
+                        }
+                        return true;
+                    },
+                    //翻頁動畫
+                    flipAnimation:function(){
+                        //翻上一頁
+                        if(this.flipAnimationType=="pre"){
+                            this.flipToPrePage = true;
+                        }
+                        //翻下一頁
+                        else{
+                            this.flipToNextPage = true;
+                        }
+                        //下一頁要在翻頁前變更內容
+                        if(this.flipAnimationType =="next"){
+                            this.changeLetter();
+                        }
+                        
+                        //設定計時器取消  翻頁動畫
+                        this.timer = setTimeout(this.cancel,1000);
+                        
+                    },
+                    cancel:function(){
+                        this.flipToPrePage=false;
+                        this.flipToNextPage=false;
+                        clearTimeout(this.timer);
+                        //上一頁要在翻頁後變更內容
+                        if(this.flipAnimationType =="pre"){
+                            this.changeLetter();
+                        }
+                    },
+                    changeLetter:function(){
+                        //隱藏現在這頁
+                        this.pages[this.nowPage].show = false;  
+                        if(this.flipAnimationType=="pre"){
+                            this.nowPage --;
+                        }
+                        else{
+                            this.nowPage ++;
+                        }                                              
+                        //顯示翻頁後的內容
+                        this.pages[this.nowPage].show = true;
+                    },
+                    getCurrentYear:function(){
+                        
+                    }
+                },
+                computed:{},
+                watch:{
+                    
+                }
+
+            })
+            //初始化要開啟哪一頁
+            var date = new Date();
+            app.nowPage = this.nowPage = date.getFullYear() - 2019;
+            app.pages[app.nowPage].show = true;
+        })
+    </script>
+</head>
+<body>
+    <div id="divContent">
+        <!--書-->
+        <div id="divBook">
+            <!--封面-->
+            <div id="divFrontCover" :class="{'flipFrontCover':isOpen}" @click="openBook();"> 
+                <div id="divFrontCoverTitle">
+                    筱婕の<br/>Birthday Present
+                </div>
+                <div id="remind">請點擊書的封面，開啟</div>
+            </div>
+            <!--內頁-->
+            <div class="letterBackground" v-for="page in pages" v-show="page.show" @click="flipPage('next')">
+                <!--日期-->
+                <div class="letterTitle">
+                    {{page.title}}
+                </div>
+                <!--信件內容-->
+                <div class="letterContent">
+                    <span v-html="page.contentText"></span>
+                </div>
+                <!--目前頁數-->
+                <div class="currentPage">
+                    {{nowPage+1}} / {{pages.length}}
+                </div>
+            </div>
+            <!--翻頁動畫用的頁面-->
+            <div class="letterBackground" hidden :class="{'flipToNextPage':flipToNextPage,'flipToPrePage':flipToPrePage}">
+            </div>
+        </div>
+        <!--換頁按鈕-->
+        <div id="divChangeButton">
+            {{nowPage}}
+            <div @click="flipPage('pre')">
+                < 
+            </div>
+            <div @click="flipPage('next')">
+                >
+            </div>
+        </div>
+
+
+        <!--清單-->
+        <div id="playList">
+            <div id="playList_leftSide">
+                <div class="playList_MainList">
+                    功能清單
+                </div>
+                <div class="playList_SubList">
+                    <div>
+                        自製卡片
+                    </div>
+                    <div>
+                        <a href="">音樂撥放器</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+</html>
