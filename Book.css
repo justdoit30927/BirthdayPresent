@@ -19,9 +19,9 @@ button{
 {
     position: absolute;
     top:10%;
-    left:45%;
+    left:50%;
     width: 400px;
-    height: 400px;
+    height: 500px;
     
 }
 
@@ -57,7 +57,7 @@ button{
 #divBook >div{
     position: absolute;
     width: 400px;
-    height: 400px;
+    height: 500px;
     background-color: #ffffff;
     border:#000000 3px solid;
     transition:2s;
@@ -84,6 +84,7 @@ button{
 #divFrontCoverTitle{
     width:100%;
     height:60%;
+    margin-top:100px; 
     font-family:monospace;
     font-size:35px;
     Line-height:70px;
@@ -124,8 +125,9 @@ button{
     padding:30px;
     font-family:cursive;
     font-size:20px;
-    text-indent:2em;
+    text-indent:20px;
 }
+
 .currentPage{
     text-align: center;
     font-size: 20px;
@@ -239,3 +241,109 @@ button{
     color:black;    
     text-decoration:none;
 }
+
+/*--------------------------世界地圖------------------------------*/
+/*世界地圖本體*/
+#divWorldMap{
+    height: 500px;
+    width:800px;
+    border:#ffffff 10px solid;
+    margin-top:-270px;
+    margin-left:-410px;
+    background:black;
+    position: fixed;top:50%; left:50%;
+    background-image: url(./img/worldremove.png);
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size: 800px;
+}
+/**世界地圖popup的叉叉**/
+#divCloseWorldMap{
+    position: absolute;
+    top:-20px;
+    right:-20px;
+    cursor: pointer;
+    color: #000;
+    background: #fff;
+    border-radius: 50%;
+}
+/**地圖 國家紅點的定位**/
+#America{
+    top:230px;
+    left:160px;
+}
+#South_America{
+    top:330px;
+    left:260px;
+}
+#Africa{
+    top:290px;
+    left:420px;
+}
+#Europe{
+    top:190px;
+    left:400px;
+}
+#Central_Asia{
+    top:230px;
+    left:490px;
+}
+#Korea{
+    top:220px;
+    left:635px;
+}
+#Japan{
+    top:220px;
+    left:660px;
+}
+#Australia{
+    top:370px;
+    left:650px;
+}
+#New_Zealand{
+    top:415px;
+    left:725px;
+}
+
+/*國家碰觸紅點    出現名稱*/
+#America::after,#South_America::after,#Europe::after
+{
+    position: absolute;
+    top:-20px;
+    left:10px;
+    padding: 0px 5px;
+    border:#000 2px solid;
+    white-space:nowrap;
+    color:#000;
+    text-decoration: none;
+    background:#fff;
+}
+#America:hover::after{
+    content: '北美';
+}
+#South_America:hover::after{
+    content: '南美洲';
+}
+#Europe:hover::after{
+    content: '歐洲';
+}
+
+/**世界地圖的紅點**/
+.divWorldMap-redPoint{
+    position: absolute;
+    border-radius:50%;
+    background-color: red;
+    height: 10px;
+    width:10px;
+}
+.divWorldMap-redPoint:hover
+{
+    background-color:#be0000;
+    height: 12px;
+    width:12px; 
+}
+
+
+
+
+

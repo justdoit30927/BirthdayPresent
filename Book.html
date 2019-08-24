@@ -4,13 +4,17 @@
     <script src="./Jquery/jquery-3.4.1.js"></script>
     <script src="./Vue/vue.js"></script>
     <link rel=stylesheet type="text/css" href="Book.css">
-
+    <link rel=stylesheet type="text/css" href="./fontawesome/css/all.css">
+    <!-- 燈箱插件 -->
+    <script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
+    <link rel="stylesheet" href="lightbox/css/lightbox.min.css">
+    
     <script>
         $(document).ready(function(){
             var app = new Vue({
-                
                 el:"#divContent",
                 data:{
+                    currentYear:2019,
                     isOpen:false,
                     nowPage: 0,
                     flipToPrePage:false,
@@ -19,38 +23,56 @@
                     timer:0,
                     pages:[
                     {
-                        id:1,
+                        year:2019,
                         title:"2019.8.25",
-                        contentText:"我知道很不像書，抱歉我盡力了。<br/>筱婕祝妳生日快樂" 
-                                    + "<br/>妳曾經說過說過工作後希望每年都能出國一次，不知道實現了沒有。"
-                                    + "",
-                        pageZIndex:-1,
+                        contentText:"<div>我知道很不像書，抱歉我盡力了。</div>"
+                                    +"<br/>"
+                                    +"<div>筱婕祝妳生日快樂 (歡呼!!)</div>" 
+                                    +"<br/>"
+                                    +"<div>妳曾經說過說過工作後希望每年都能出國一次，不知道實現了沒有。</div>"
+                                    +"<div>祝妳人生的世界地圖能比旁邊的地圖還要精采。</div>"
+                                    +"<div>前一段時間去宿霧，那裏的海真的好乾淨好漂亮，還達成了摸到鯨鯊的夢想，開心。</div>"
+                                    +"<br/>"
+                                    +"使用教學：點右邊頁會翻下頁，點左邊頁會翻到上頁",
                         show:false,
-                        worldMapShow:true,
                     },
                     {
-                        id:2,
+                        year:2020,
                         title:"2020.8.25",
-                        contentText:"好久不見，祝妳生日快樂，這是2020份的祝福，請在2020年再看謝謝。",
-                        pageZIndex:-2,
+                        contentText:"<div>好久不見，祝妳生日快樂，這是2020份的祝福，請在2020年再看謝謝。</div>"
+                                    +"<div>怕被偷看，所以我藏了一些在2020年開啟時才看的到的文字在下面。</div>"
+                                    +"</br><div><strong>以下為隱藏內容：</strong></div>",
+                        hiddenText:"<div>哈哈我猜到了2020，妳也忘了我有做這東西吧!"
+                                    +"所以以下的東西都是寫來自我滿足的。</div>"
+                                    +"<div>首先想對以前的奇怪行為再次道歉。</div>"
+                                    +"<div>其次其實在標頭有藏句子，如果把每一年的字湊起來就是[我好想妳]。</div>"
+                                    +"<div>如果能親口說該有多好，但我知道不應該再打擾妳。</div>"
+                                    +"<div>但就真的很想...</div>",
                         show:false,
-                        worldMapShow:false,
                     },
                     {
-                        id:3,
+                        year:2021,
                         title:"2021.8.25",
-                        contentText:"想不出來還能寫甚麼了，",
-                        pageZIndex:-3,
+                        contentText:"想不出來還能寫甚麼了....."
+                                    +"<div>生日快樂</div>"
+                                    +"<div>失眠的情況有改善嗎？</div>"
+                                    +"<div>那就來工商一下，如果有需要</div>",
                         show:false,
-                        worldMapShow:false,
                     },
                     {
-                        id:4,
+                        year:2022,
                         title:"2022.8.25",
-                        contentText:"妳最近好嗎？<br/>",
-                        pageZIndex:-3,
+                        contentText:"<div>妳最近好嗎筱婕？</div>"
+                                    +"<div>生日快樂!!這禮物一次能用四年，真的划算。</div>"
+                                    +"<div>至於為什麼是四年呢？  秘密 嘻</div>"
+                                    +"<br/>"
+                                    +"<div>27歲的生活是怎麼樣呢？很辛苦嗎、很疲憊嗎 又或者很幸福。</div>"
+                                    +"<div>人生不如意十之八九，後悔的事也是不停地發生"
+                                    +"，但也會有讓人開心的事。</div>"
+                                    +"<div>希望妳能保持一顆快樂的心，渡過接下來的每一天。(笑一個 嘻)</div>"
+                                    +"<div>愛笑的女孩兒運氣不會差。(應該啦)</div>"
+                                    +"<div>祝妳能順利找到，值得讓妳付出熱情的目標。</div>",
                         show:false,
-                        worldMapShow:false,
                     }
                     ],
                 },
@@ -131,8 +153,9 @@
                         //顯示翻頁後的內容
                         this.pages[this.nowPage].show = true;
                     },
-                    getCurrentYear:function(){
-                        
+                    //按下功能的世界地圖能開啟世界地圖
+                    changeWorldMapState:function(){
+                        app2.showWorldMap = true;
                     }
                 },
                 computed:{},
@@ -143,9 +166,173 @@
             })
             //初始化要開啟哪一頁
             var date = new Date();
-            app.nowPage = this.nowPage = date.getFullYear() - 2019;
+            app.nowPage = date.getFullYear() - 2019;
             app.pages[app.nowPage].show = true;
+            app.currentYear = date.getFullYear();//現在哪一年
+            //給世界地圖使用的VUE
+            var app2 = new Vue({
+                el:"#divWorldMap",
+                data:{
+                    showWorldMap:true,
+                    pictures:[
+                        //美國
+                        {
+                            picturePath:"./img/scenery/America02.jpg",
+                            group:"America",
+                            title:"美國 - 科羅拉多大峽谷 (沒逛完真的很遺憾)"
+                        },
+                        {
+                            picturePath:"./img/scenery/America03.jpg",
+                            group:"America",
+                            title:"美國 - 馬蹄灣"
+                        },
+                        {
+                            picturePath:"./img/scenery/America04.jpg",
+                            group:"America",
+                            title:"美國 - 羚羊峽谷"
+                        },
+                        {
+                            picturePath:"./img/scenery/America05.jpg",
+                            group:"America",
+                            title:"美國 - 紐約 (The Big Apple)"
+                        },
+                        {
+                            picturePath:"./img/scenery/America06.jpg",
+                            group:"America",
+                            title:"美國 - 西雅圖 （Emerald City）"
+                        },
+                        {
+                            picturePath:"./img/scenery/America07.jpg",
+                            group:"America",
+                            title:"美國 - 拉斯維加斯 (Sin City)"
+                        },
+                        //中南美
+                        {
+                            picturePath:"./img/scenery/South_America02.jpg",
+                            group:"South_America",
+                            title:"阿根廷烏 - 世界之南斯懷亞"
+                        },
+                        {
+                            picturePath:"./img/scenery/South_America03.jpg",
+                            group:"South_America",
+                            title:"智利 - 最狹長的國家"
+                        },
+                        //歐洲
+                        {
+                            picturePath:"./img/scenery/Europe02.jpg",
+                            group:"Europe",
+                            title:"烏克蘭 - 傳說中的美女聖地"
+                        },
+                        {
+                            picturePath:"./img/scenery/Europe03.jpg",
+                            group:"Europe",
+                            title:"斯洛伐克 - 冰與火之歌的拍攝場景(想去)"
+                        },
+                        {
+                            picturePath:"./img/scenery/Europe04.jpg",
+                            group:"Europe",
+                            title:"荷蘭 - 羊角村"
+                        },
+                        {
+                            picturePath:"./img/scenery/Europe05.jpg",
+                            group:"Europe",
+                            title:"挪威 - 能看到極光的國度"
+                        },
+                        //非洲
+                        {
+                            picturePath:"./img/scenery/Africa02.jpg",
+                            group:"Africa",
+                            title:"肯亞 - 斑馬小知識，他們的條紋好像會降地蒼蠅停留的意願，模糊的discory印象"
+                        },
+                        {
+                            picturePath:"./img/scenery/Africa03.jpg",
+                            group:"Africa",
+                            title:"開普敦 - 企鵝沒錯就是企鵝"
+                        },
+                        //中亞
+                        {
+                            picturePath:"./img/scenery/Central_Asia02.jpg",
+                            group:"Central_Asia",
+                            title:"美索不達米亞 - 古文明的發源地"
+                        },
+                        {
+                            picturePath:"./img/scenery/Central_Asia03.jpg",
+                            group:"Central_Asia",
+                            title:"阿拉伯 - 人造的綠洲奇蹟"
+                        },
+                        //韓國
+                        {
+                            picturePath:"./img/scenery/Korea02.jpg",
+                            group:"Korea",
+                            title:"韓國 - 對不起雖然很漂亮但我就是不喜歡韓國人"
+                        },
+                        {
+                            picturePath:"./img/scenery/Korea03.jpg",
+                            group:"Korea",
+                            title:"韓國 - 人造人的國度"
+                        },
+                        //日本
+                        {
+                            picturePath:"./img/scenery/Japan02.jpg",
+                            group:"Japan",
+                            title:"日本 - 廣島的嚴島神社"
+                        },
+                        {
+                            picturePath:"./img/scenery/Japan03.jpg",
+                            group:"Japan",
+                            title:"日本 - 櫻花"
+                        },
+                        //澳洲
+                        {
+                            picturePath:"./img/scenery/Australia02.jpg",
+                            group:"Australia",
+                            title:"澳洲 - 我最愛的超壯袋鼠roger過世了"
+                        },
+                        {
+                            picturePath:"./img/scenery/Australia03.jpg",
+                            group:"Australia",
+                            title:"澳洲 - 大堡礁"
+                        },
+                        //紐西蘭
+                        {
+                            picturePath:"./img/scenery/New_Zealand02.jpg",
+                            group:"New_Zealand",
+                            title:"紐西蘭 - 活的地理教室"
+                        },
+                        {
+                            picturePath:"./img/scenery/New_Zealand03.jpg",
+                            group:"New_Zealand",
+                            title:"紐西蘭 - 峽灣國家公園"
+                        },
+                        {
+                            picturePath:"./img/scenery/New_Zealand04.jpg",
+                            group:"New_Zealand",
+                            title:"紐西蘭 - 瑪塔瑪塔(哈比村)"
+                        }
+                    ],
+                },
+                methods:{
+                    closeWindow:function(){
+                        this.showWorldMap = false;
+                    }
+                }
+            })
+
+            //點擊空白處，彈跳視窗消失
+            $(document).click(function(obj){
+                var container =$("#divWorldMap"); // 這邊放你想要排除的區塊  (世界地圖本身)
+                var container2 =$("#playList_WorldMapLink"); // 這邊放你想要排除的區塊  (功能列表的世界地圖連結)
+                var container3 =$("#lightbox"); // 這邊放你想要排除的區塊 (燈箱)
+                
+                if((!container.is(obj.target)&& container.has(obj.target).length === 0)
+                    &&(!container2.is(obj.target)&& container2.has(obj.target).length === 0)
+                    &&(!container3.is(obj.target)&& container3.has(obj.target).length === 0))
+                {
+                    app2.showWorldMap = false;
+                }
+            })
         })
+        
     </script>
 </head>
 <body>
@@ -168,6 +355,8 @@
                 <!--信件內容-->
                 <div class="letterContent">
                     <span v-html="page.contentText"></span>
+                    <!--隱藏內容-->
+                    <span v-if="currentYear >= page.year" v-html="page.hiddenText"></span>
                 </div>
                 <!--目前頁數-->
                 <div class="currentPage">
@@ -192,12 +381,62 @@
                     <a href="./gramophone.html">
                         <div>音樂撥放器</div>
                     </a>
+                    <a id="playList_WorldMapLink"href="javascript:void(0)" @click="changeWorldMapState">
+                        <div>世界地圖</div>
+                    </a>
                 </div>
             </div>
         </div>
-
-
-
     </div>
+
+    <!--世界地圖-->
+    <div id="divWorldMap" v-show="showWorldMap">
+        <!--關閉popup-->
+        <div id="divCloseWorldMap" class="fas fa-times-circle fa-2x" @click="closeWindow"></div>
+        <!--美國-->
+        <a href="./img/scenery/America01.jpg" data-lightbox="America" data-title="美國 - 黃石大稜鏡">
+            <div id="America" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--南美洲-->
+        <a href="./img/scenery/South_America01.jpg" data-lightbox="South_America" data-title="墨西哥 - 瓜納華托之彩色山城">
+            <div id="South_America" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--歐洲-->
+        <a href="./img/scenery/Europe01.jpg" data-lightbox="Europe" data-title="瑞典(IKEA的國度) - 首都斯德哥爾摩">
+            <div id="Europe" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--非洲-->
+        <a href="./img/scenery/Africa01.jpg" data-lightbox="Africa" data-title="肯亞 - 長頸鹿小知識，他們會甩脖子打架">
+            <div id="Africa" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--中亞-->
+        <a href="./img/scenery/Central_Asia01.jpg" data-lightbox="Central_Asia" data-title="土耳其 - 歐亞多元文化的交界">
+            <div id="Central_Asia" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--韓國-->
+        <a href="./img/scenery/Korea01.jpg" data-lightbox="Korea" data-title="韓國 - 小知識韓國的文字是從窗戶得到靈感的">
+            <div id="Korea" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--日本-->
+        <a href="./img/scenery/Japan01.jpg" data-lightbox="Japan" data-title="日本 - 負四三">
+            <div id="Japan" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--澳洲-->
+        <a href="./img/scenery/Australia01.jpg" data-lightbox="Australia" data-title="澳洲 - 皮雪曼雪梨瓦樂比路42號">
+            <div id="Australia" class="divWorldMap-redPoint"></div>
+        </a>
+        <!--紐西蘭-->
+        <a href="./img/scenery/New_Zealand01.jpg" data-lightbox="New_Zealand" data-title="紐西蘭 - 蒂卡波湖畔星空和南極光籠罩下的牧羊人教堂（Church of the Good Shepherd）">
+            <div id="New_Zealand" class="divWorldMap-redPoint"></div>
+        </a>
+
+        <!-- 隱藏的風景照 -->
+        <div id="hidden-America-Image">
+            <div v-for="picture in pictures">
+                <a :href="picture.picturePath" :data-lightbox="picture.group" :data-title="picture.title"></a>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
