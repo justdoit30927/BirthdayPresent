@@ -31,9 +31,9 @@
                                     +"<br/>"
                                     +"<div>妳曾經說過說過工作後希望每年都能出國一次，不知道實現了沒有。</div>"
                                     +"<div>祝妳人生的世界地圖能比旁邊的地圖還要精采。</div>"
-                                    +"<div>前一段時間去宿霧，那裏的海真的好乾淨好漂亮，還達成了摸到鯨鯊的夢想，開心。</div>"
+                                    +"<br/><div>前一段時間去宿霧，那裏的海真的好乾淨好漂亮，還達成了摸到鯨鯊的夢想，開心。</div>"
                                     +"<br/>"
-                                    +"使用教學：點右邊頁會翻下頁，點左邊頁會翻到上頁",
+                                    +"<strong>使用教學：</strong>點右邊頁會翻下頁，點左邊頁會翻到上頁",
                         show:false,
                     },
                     {
@@ -54,16 +54,17 @@
                         year:2021,
                         title:"2021.8.25",
                         contentText:"想不出來還能寫甚麼了....."
-                                    +"<div>生日快樂</div>"
-                                    +"<div>失眠的情況有改善嗎？</div>"
-                                    +"<div>那就來工商一下，如果有需要</div>",
+                                    +"<div>祝妳26歲生日快樂</div>"
+                                    +"</br><div>剩下的版面就來工商一下，如果有程式相關的需求，請洽：09XXXXXXXX 黃先生</div>"
+                                    +"</br><div><strong>以下為隱藏內容：</strong></div>",
+                        hiddenText:"<div>今年沒有隱藏訊息喔 ㄏ</div>",
                         show:false,
                     },
                     {
                         year:2022,
                         title:"2022.8.25",
                         contentText:"<div>妳最近好嗎筱婕？</div>"
-                                    +"<div>生日快樂!!這禮物一次能用四年，真的划算。</div>"
+                                    +"<div>生日快樂!!這是最後一年了，這禮物一次能用四年，真的划算。</div>"
                                     +"<div>至於為什麼是四年呢？  秘密 嘻</div>"
                                     +"<br/>"
                                     +"<div>27歲的生活是怎麼樣呢？很辛苦嗎、很疲憊嗎 又或者很幸福。</div>"
@@ -160,7 +161,6 @@
                 },
                 computed:{},
                 watch:{
-                    
                 }
 
             })
@@ -169,11 +169,12 @@
             app.nowPage = date.getFullYear() - 2019;
             app.pages[app.nowPage].show = true;
             app.currentYear = date.getFullYear();//現在哪一年
+            
             //給世界地圖使用的VUE
             var app2 = new Vue({
                 el:"#divWorldMap",
                 data:{
-                    showWorldMap:true,
+                    showWorldMap:false,
                     pictures:[
                         //美國
                         {
@@ -210,7 +211,7 @@
                         {
                             picturePath:"./img/scenery/South_America02.jpg",
                             group:"South_America",
-                            title:"阿根廷烏 - 世界之南斯懷亞"
+                            title:"阿根廷烏 - 世界的盡頭南斯懷亞"
                         },
                         {
                             picturePath:"./img/scenery/South_America03.jpg",
